@@ -2,4 +2,4 @@
 
 clang --static -o init init.c
 cat files | cpio -o -H newc > archive
-gzip archive
+gzip -f archive
