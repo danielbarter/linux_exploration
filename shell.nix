@@ -1,7 +1,7 @@
 with (import <nixpkgs> {});
 mkShell {
-  buildInputs = [ musl
-                  qemu
+  buildInputs = [ qemu
                   clang
+                  glibc.static
                 ];
 }
