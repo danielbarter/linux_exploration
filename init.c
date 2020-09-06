@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <fcntl.h>
 
 int printContentsOfCurrentDirectory() {
   char currentDirectoryString[4096];
@@ -13,7 +14,7 @@ int printContentsOfCurrentDirectory() {
     return 1;
   }
 
-
+  printf("\n\n");
   printf("current directory: %s",currentDirectoryString);
   printf("\n\n");
   printf("files:\n");
@@ -35,10 +36,22 @@ int printContentsOfCurrentDirectory() {
 int main() {
 
   printContentsOfCurrentDirectory();
+  if ( chdir("/dev") != 0) {
+    printf("failed to change to /dev\n");
+  }
+  printContentsOfCurrentDirectory();
 
+  char byte;
+  int fd = open("/dev/console",O_RDWR);
+  while (1) {
+    ssize_t size_read = read(fd, &byte, 1);
+    if (byte == 'X')
+      break;
+    printf("Read byte %c\n", byte);
+  }
 
   printf("\n");
-  printf("THE END GOODBYE\n");
-  sleep(0xFFFFFFFF);
+  printf("THE END GOODBYE\n\n\n");
+  sleep(0xFFFF);
   return 0;
 }
